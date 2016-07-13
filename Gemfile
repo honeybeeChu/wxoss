@@ -54,13 +54,7 @@ group :development, :test do
 end
 
 group :deploy do
-  gem 'capistrano'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-  gem 'capistrano3-puma', require: false
-  gem 'capistrano-faster-assets'
-  gem 'capistrano-sidekiq'
-  gem 'capistrano-clockwork'
+  gem 'mina'
 end
 
 gem 'puma'
