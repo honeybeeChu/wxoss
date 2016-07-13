@@ -51,11 +51,11 @@ group :development, :test do
 
   #定时任务监控
   gem 'sinatra', :require => nil
-end
-
-group :deploy do
   gem 'mina'
 end
+
+
+
 
 gem 'puma'
 

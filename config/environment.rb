@@ -8,8 +8,8 @@ WEIXIN_SERVER = 'http://yaxin-nanjing.com/wxoss'.freeze
 
 
 SYSTEM_ID="111"
-# AIUAS_URL="http://10.21.17.175:9871/aiuas/ciserver/adminauth.action".freeze
-AIUAS_URL="http://10.117.206.121:85/aiuas/ciserver/adminauth.action".freeze
+AIUAS_URL="http://10.21.17.175:9871/aiuas/ciserver/adminauth.action".freeze
+# AIUAS_URL="http://10.117.206.121:85/aiuas/ciserver/adminauth.action".freeze
 
 GET_MATERIALCOUNT = 'https://api.weixin.qq.com/cgi-bin/material/get_materialcount'.freeze
 BATCHGET_MATERIAL = 'https://api.weixin.qq.com/cgi-bin/material/batchget_material'.freeze
