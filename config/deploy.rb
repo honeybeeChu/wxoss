@@ -2,7 +2,7 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
-# require 'mina/rvm'    # for rvm support. (http://rvm.io)
+require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
 # Basic settings:
 #   domain       - The hostname to SSH to.
@@ -12,18 +12,21 @@ require 'mina/git'
 
 set :domain, '121.40.17.223'
 set :deploy_to, '/home/linkage/work/wxoss'
-set :repository, 'https://github.com/honeybeeChu/wxoss.git'
+set :repository, 'https://github.com/honeybeeChu/wxoss.git' #'git@github.com:honeybeeChu/xiuniang.git'
 set :branch, 'master'
 
+set :term_mode, nil
+
 # For system-wide RVM install.
-#   set :rvm_path, '/usr/local/rvm/bin/rvm'
+set :rvm_path, '/home/linkage/.rvm/bin/rvm'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
 set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log']
 
 # Optional settings:
-#   set :user, 'foobar'    # Username in the server to SSH to.
+set :user, 'linkage'    # Username in the server to SSH to.
+# set :rail_env, 'development'
 #   set :port, '30000'     # SSH port number.
 #   set :forward_agent, true     # SSH forward_agent.
 
@@ -36,6 +39,7 @@ task :environment do
 
   # For those using RVM, use this to load an RVM version@gemset.
   # invoke :'rvm:use[ruby-1.9.3-p125@default]'
+
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -51,6 +55,36 @@ task :setup => :environment do
   queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
   queue! %[touch "#{deploy_to}/#{shared_path}/config/secrets.yml"]
   queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml' and 'secrets.yml'."]
+
+
+  # puma.rb 配置puma必须得文件夹及文件
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp/pids"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/pids"]
+
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp/sockets"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/sockets"]
+
+  queue! %[touch "#{deploy_to}/shared/config/puma.rb"]
+  queue  %[echo "-----> Be sure to edit 'shared/config/puma.rb'."]
+
+  # tmp/sockets/puma.state
+  queue! %[touch "#{deploy_to}/shared/tmp/sockets/puma.state"]
+  queue  %[echo "-----> Be sure to edit 'shared/tmp/sockets/puma.state'."]
+
+
+  # puma.pid
+  # queue! %[touch "#{deploy_to}/shared/tmp/pids/puma.pid"]
+
+  # log/puma.stdout.log
+  queue! %[touch "#{deploy_to}/shared/log/puma.stdout.log"]
+  queue  %[echo "-----> Be sure to edit 'shared/log/puma.stdout.log'."]
+
+  # log/puma.stdout.log
+  queue! %[touch "#{deploy_to}/shared/log/puma.stderr.log"]
+  queue  %[echo "-----> Be sure to edit 'shared/log/puma.stderr.log'."]
+
+  queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml'."]
+
 
   if repository
     repo_host = repository.split(%r{@|://}).last.split(%r{:|\/}).first
@@ -78,6 +112,7 @@ task :deploy => :environment do
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
+    # invoke :'puma:on_restart'
 
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"

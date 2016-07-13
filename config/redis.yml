@@ -1,3 +1,7 @@
-development: redis://10.1.234.78:6379
-test: redis://10.1.234.78:6379
+#development: redis://10.1.234.78:6379
+#test: redis://10.1.234.78:6379
+#production: unix:/var/run/redis/redis.sock
+
+development: redis://localhost:6379
+test: redis://localhost:6379
 production: unix:/var/run/redis/redis.sock
