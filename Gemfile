@@ -51,13 +51,14 @@ group :development, :test do
 
   #定时任务监控
   gem 'sinatra', :require => nil
-  gem 'mina'
+
 end
 
 
 
 
 gem 'puma'
+gem 'mina'
 
 gem 'weixin_rails_middleware'
 gem 'weixin_authorize'
