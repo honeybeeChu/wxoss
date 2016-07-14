@@ -49,10 +49,11 @@ group :development, :test do
   #web性能分析
   gem 'rack-mini-profiler'
 
-  #定时任务监控
-  gem 'sinatra', :require => nil
+
 
 end
+#定时任务监控
+gem 'sinatra', :require => nil
 
 
 
