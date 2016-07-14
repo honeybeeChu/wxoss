@@ -22,7 +22,7 @@ set :rvm_path, '/home/linkage/.rvm/bin/rvm'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log']
+set :shared_paths, ['config/database.yml','config/environment.rb', 'config/secrets.yml', 'log']
 
 # Optional settings:
 set :user, 'linkage'    # Username in the server to SSH to.
@@ -38,7 +38,7 @@ task :environment do
   # invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  # invoke :'rvm:use[ruby-1.9.3-p125@default]'
+  invoke :'rvm:use[ruby-1.9.3-p125@default]'
 
 end
 
@@ -54,7 +54,8 @@ task :setup => :environment do
 
   queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
   queue! %[touch "#{deploy_to}/#{shared_path}/config/secrets.yml"]
-  queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml' and 'secrets.yml'."]
+  queue! %[touch "#{deploy_to}/#{shared_path}/config/environment.rb"]
+  queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml' 'environment.rb' and 'secrets.yml'."]
 
 
   # puma.rb 配置puma必须得文件夹及文件
@@ -83,7 +84,6 @@ task :setup => :environment do
   queue! %[touch "#{deploy_to}/shared/log/puma.stderr.log"]
   queue  %[echo "-----> Be sure to edit 'shared/log/puma.stderr.log'."]
 
-  queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml'."]
 
 
   if repository

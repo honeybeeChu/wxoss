@@ -58,3 +58,5 @@ ACCESS_INTERNET_URL= 'http://218.204.39.6:9972/bjwxserver/wx/server'
 #用户默认组别
 DEFAULT_GROUP_ID = 0
 BLACK_GROUP_ID = 1
+
+REDIS_PATH = "10.117.206.121" #10.1.234.78
