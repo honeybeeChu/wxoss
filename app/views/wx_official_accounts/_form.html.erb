@@ -22,11 +22,19 @@
         <%= f.text_field :app_secret, :class => "add-ipt"%>
         <span class="prompt">用于自定义菜单等高级功能</span>
       </div>
+
+      <div class="add-item">
+        <% enterprise_array = WxMEnterpriseclient.all.map { |enterprise| [enterprise.ecname, enterprise.id] } %>
+        <label class="add-label"><span class="required">*</span><%= f.label :wx_m_enterpriseclient_id, "公众号所属集团：" %></label>
+        <%= f.select :wx_m_enterpriseclient_id, enterprise_array, {:prompt => "请选择"}, {:class => 'add-ipt'} %>
+      </div>
+
       <div class="add-item">
         <label class="add-label"><span class="required">*</span><%= f.label :wechat_type, "公众号类型：" %></label>
         <%= f.select :wechat_type, [["未认证订阅号", 1], ["已认证订阅号", 2], ["未认证服务号", 3], ["已认证服务号", 4]], {:prompt => "请选择"}, {:class => 'add-ipt'} %>
         <span class="prompt">认证服务号或订阅号是指每年向微信官方交300元认证费的公众号</span>
       </div>
+
       <!--<div class="add-item">-->
         <!--<%= f.label :accesstype, "微信多客服：", :class => "add-label" %>-->
         <!--<label class="radio-label"><input type="checkbox" name="" id="" checked>启用微客服</label><a href="javascript:void(0)">查看如何设置？</a>-->
@@ -54,6 +62,7 @@
       var wechat_name_Input = $("#wx_official_account_wechat_name");
 
       var wechatTypeInput = $("#wx_official_account_wechat_type");
+      var enterpriseclient_id = $("#wx_official_account_wx_m_enterpriseclient_id");
       var app_id_Input = $("#wx_official_account_app_id");
       var app_secret_Input = $("#wx_official_account_app_secret");
 
@@ -77,8 +86,16 @@
         app_secret_Input.focus();
         return false;
       }
+      //enterpriseclient_id不能为空
+      else if($.trim(enterpriseclient_id.val()) == ''){
+        enterpriseclient_id.focus();
+        $('<div class="results"  style="position:fixed;z-index:999;top:0px ">请选择公众号所属集团</div>').appendTo("body").fadeOut(6000);
+        console.log(111);
+        return false;
+      }
       //wechat_type不能为空
       else if($.trim(wechatTypeInput.val()) == ''){
+        $('<div class="results"  style="position:fixed;z-index:999;top:0px ">请选择公众号类型</div>').appendTo("body").fadeOut(6000);
         return false;
       }
       else{

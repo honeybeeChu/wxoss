@@ -52,7 +52,7 @@ class WelcomeController < ApplicationController
         funcliststr=result.fetch("funclist")
         funclist=JSON.parse(funcliststr)
 
-        menu=MFunction.getMeaus(funclist);
+        menu=MFunction.getMeaus(funclist)
         info=wx_official_accounts_path
         admin=Hash.new
         admin.store("adminname", username)

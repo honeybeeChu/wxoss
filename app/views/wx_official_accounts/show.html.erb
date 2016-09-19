@@ -27,6 +27,10 @@
             <%= @wx_official_account.app_secret %>
           </div>
           <div class="add-item">
+            <label class="add-label">公众号所属集团：</label>
+            <%= WxMEnterpriseclient.find(@wx_official_account.wx_m_enterpriseclient_id).ecname %>
+          </div>
+          <div class="add-item">
             <label class="add-label">公众号类型：</label>
             <%	if @wx_official_account.wechat_type == 1%>
                 未认证订阅号

@@ -8,6 +8,7 @@ WEIXIN_SERVER = 'http://yaxin-nanjing.com/wxoss'.freeze
 
 
 SYSTEM_ID="111"
+#AIUAS_URL="http://10.1.234.78:9871/aiuas/ciserver/adminauth.action".freeze
 AIUAS_URL="http://10.21.17.175:9871/aiuas/ciserver/adminauth.action".freeze
 # AIUAS_URL="http://10.117.206.121:85/aiuas/ciserver/adminauth.action".freeze
 
@@ -53,10 +54,11 @@ UPDATE_GROUP_NAME = 'https://api.weixin.qq.com/cgi-bin/groups/update'.freeze
 DEL_GROUP = 'https://api.weixin.qq.com/cgi-bin/groups/delete'.freeze
 #一键上网的链接地址
 # ACCESS_INTERNET_URL= 'http://10.1.234.78:9972/bjwxserver/wx/server'
-ACCESS_INTERNET_URL= 'http://218.204.39.6:9972/bjwxserver/wx/server'
+ACCESS_INTERNET_URL= 'http://218.204.39.6:9972/bjwxserver/wx/server'.freeze
 
 #用户默认组别
 DEFAULT_GROUP_ID = 0
 BLACK_GROUP_ID = 1
 
-REDIS_PATH = "10.117.206.121" #10.1.234.78
+#"10.117.206.121" #
+REDIS_PATH = '10.1.234.78'.freeze

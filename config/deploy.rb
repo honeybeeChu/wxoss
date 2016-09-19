@@ -22,7 +22,7 @@ set :rvm_path, '/home/linkage/.rvm/bin/rvm'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml','config/environment.rb', 'config/secrets.yml', 'log']
+set :shared_paths, ['config/database.yml','config/environment.rb', 'config/secrets.yml', 'log','public/uploads']
 
 # Optional settings:
 set :user, 'linkage'    # Username in the server to SSH to.
@@ -52,6 +52,10 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
 
+  # 每个版本共享uploads目录，上传的图片
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/public/uploads"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/public/uploads"]
+
   queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
   queue! %[touch "#{deploy_to}/#{shared_path}/config/secrets.yml"]
   queue! %[touch "#{deploy_to}/#{shared_path}/config/environment.rb"]
@@ -71,7 +75,6 @@ task :setup => :environment do
   # tmp/sockets/puma.state
   queue! %[touch "#{deploy_to}/shared/tmp/sockets/puma.state"]
   queue  %[echo "-----> Be sure to edit 'shared/tmp/sockets/puma.state'."]
-
 
   # puma.pid
   # queue! %[touch "#{deploy_to}/shared/tmp/pids/puma.pid"]
@@ -109,7 +112,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    # invoke :'rails:db_migrate'
+    invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 

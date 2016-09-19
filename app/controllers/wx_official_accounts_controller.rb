@@ -31,11 +31,13 @@ class WxOfficialAccountsController < ApplicationController
   # GET /wx_official_accounts/1.json
   def show
     @wx_official_account.client
+
   end
 
   # GET /wx_official_accounts/new
   def new
     @wx_official_account = WxOfficialAccount.new
+
   end
 
   # GET /wx_official_accounts/1/edit
@@ -53,7 +55,8 @@ class WxOfficialAccountsController < ApplicationController
         format.json { render :show, status: :created, location: @wx_official_account }
       else
         format.html { render :new }
-        format.json { render json: @wx_official_account.errors.messages, status: :unprocessable_entity }
+        # format.json { render json: @wx_official_account.errors.messages, status: :unprocessable_entity }
+        # render :new
       end
     end
   end
@@ -105,7 +108,7 @@ class WxOfficialAccountsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def wx_official_account_params
-    params.require(:wx_official_account).permit(:wechat_name, :original_id, :wechat_type, :wechat_account, :app_id, :app_secret)
+    params.require(:wx_official_account).permit(:wechat_name, :original_id, :wechat_type, :wechat_account, :app_id, :app_secret,:wx_m_enterpriseclient_id)
   end
 
   def update_wx_official_account_params

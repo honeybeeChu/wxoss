@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601093943) do
+ActiveRecord::Schema.define(version: 20160919025435) do
 
   create_table "m_function_url_filters", force: :cascade do |t|
     t.string   "funcid",      limit: 255
@@ -369,28 +369,28 @@ ActiveRecord::Schema.define(version: 20160601093943) do
   end
 
   create_table "wx_official_accounts", force: :cascade do |t|
-    t.string   "original_id",       limit: 255
-    t.string   "wechat_name",       limit: 255
-    t.string   "wechat_account",    limit: 255
-    t.integer  "wechat_type",       limit: 4
-    t.string   "app_id",            limit: 255
-    t.string   "app_secret",        limit: 255
-    t.string   "access_token",      limit: 255
-    t.string   "encoding_aes_key",  limit: 255
-    t.integer  "accesstype",        limit: 4
-    t.string   "weixin_secret_key", limit: 255
-    t.string   "weixin_token",      limit: 255
-    t.integer  "resource_flag",     limit: 4
-    t.integer  "reserved1",         limit: 4
-    t.integer  "reserved2",         limit: 4
-    t.string   "reserved3",         limit: 40
-    t.string   "reserved4",         limit: 40
-    t.string   "reserved5",         limit: 40
-    t.string   "reserved6",         limit: 40
-    t.string   "reserved7",         limit: 80
-    t.string   "reserved8",         limit: 80
-    t.string   "reserved9",         limit: 255
-    t.string   "reserved10",        limit: 255
+    t.string   "original_id",              limit: 255
+    t.string   "wechat_name",              limit: 255
+    t.string   "wechat_account",           limit: 255
+    t.integer  "wechat_type",              limit: 4
+    t.string   "app_id",                   limit: 255
+    t.string   "app_secret",               limit: 255
+    t.string   "access_token",             limit: 255
+    t.string   "encoding_aes_key",         limit: 255
+    t.integer  "accesstype",               limit: 4
+    t.string   "weixin_secret_key",        limit: 255
+    t.string   "weixin_token",             limit: 255
+    t.integer  "resource_flag",            limit: 4
+    t.integer  "wx_m_enterpriseclient_id", limit: 4
+    t.integer  "reserved2",                limit: 4
+    t.string   "reserved3",                limit: 40
+    t.string   "reserved4",                limit: 40
+    t.string   "reserved5",                limit: 40
+    t.string   "reserved6",                limit: 40
+    t.string   "reserved7",                limit: 80
+    t.string   "reserved8",                limit: 80
+    t.string   "reserved9",                limit: 255
+    t.string   "reserved10",               limit: 255
     t.datetime "expired_at"
   end
 
@@ -454,7 +454,7 @@ ActiveRecord::Schema.define(version: 20160601093943) do
     t.datetime "updated_at",                     null: false
   end
 
-  create_table "wx_user_groups", id: false, force: :cascade do |t|
+  create_table "wx_user_groups", force: :cascade do |t|
     t.integer  "groupid",                limit: 4,  default: 0, null: false
     t.string   "name",                   limit: 12
     t.integer  "count",                  limit: 4,  default: 0
@@ -489,6 +489,7 @@ ActiveRecord::Schema.define(version: 20160601093943) do
     t.integer "subscribe",              limit: 4
     t.string  "phone",                  limit: 255
     t.integer "wx_official_account_id", limit: 4
+    t.string  "tagid_list",             limit: 255
   end
 
   add_index "wx_users", ["nickname"], name: "index_wx_users_on_nickname", using: :btree
